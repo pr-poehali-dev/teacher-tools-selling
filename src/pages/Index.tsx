@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
-type Page = "home" | "catalog" | "cart";
+type Page = "home" | "catalog" | "cart" | "contacts";
 
 interface Product {
   id: number;
@@ -119,7 +119,7 @@ export default function Index() {
             ПисюнШоп
           </button>
           <nav className="hidden md:flex gap-1">
-            {(["home", "catalog", "cart"] as Page[]).map((p) => (
+            {(["home", "catalog", "contacts"] as Page[]).map((p) => (
               <button
                 key={p}
                 onClick={() => setPage(p)}
@@ -129,7 +129,7 @@ export default function Index() {
                     : "text-foreground/70 hover:text-foreground hover:bg-muted"
                 }`}
               >
-                {p === "home" ? "Главная" : p === "catalog" ? "Каталог" : "Корзина"}
+                {p === "home" ? "Главная" : p === "catalog" ? "Каталог" : "Контакты"}
               </button>
             ))}
           </nav>
@@ -147,7 +147,7 @@ export default function Index() {
           </button>
         </div>
         <div className="md:hidden flex border-t border-border">
-          {(["home", "catalog", "cart"] as Page[]).map((p) => (
+          {(["home", "catalog", "cart", "contacts"] as Page[]).map((p) => (
             <button
               key={p}
               onClick={() => setPage(p)}
@@ -155,7 +155,7 @@ export default function Index() {
                 page === p ? "text-primary border-b-2 border-primary" : "text-foreground/60"
               }`}
             >
-              {p === "home" ? "Главная" : p === "catalog" ? "Каталог" : "Корзина"}
+              {p === "home" ? "Главная" : p === "catalog" ? "Каталог" : p === "cart" ? "Корзина" : "Контакты"}
             </button>
           ))}
         </div>
@@ -409,10 +409,83 @@ export default function Index() {
         </main>
       )}
 
+      {/* CONTACTS PAGE */}
+      {page === "contacts" && (
+        <main className="max-w-4xl mx-auto px-4 py-10">
+          <h1 className="font-oswald text-4xl font-bold mb-2 animate-fade-in-up">
+            <span className="gradient-text">Контакты</span>
+          </h1>
+          <p className="text-foreground/50 mb-10 animate-fade-in-up delay-100">Мы находимся в Новосибирске и доставляем по всей России</p>
+
+          <div className="grid sm:grid-cols-2 gap-6 mb-10">
+            <div className="bg-white rounded-2xl border border-border p-6 flex gap-4 items-start animate-fade-in-up delay-100 card-hover">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
+                <Icon name="MapPin" size={22} className="text-primary" />
+              </div>
+              <div>
+                <div className="font-bold text-base mb-1">Адрес</div>
+                <div className="text-foreground/60 text-sm">г. Новосибирск</div>
+                <div className="text-foreground/40 text-xs mt-1">Самовывоз по договорённости</div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-border p-6 flex gap-4 items-start animate-fade-in-up delay-200 card-hover">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
+                <Icon name="Truck" size={22} className="text-primary" />
+              </div>
+              <div>
+                <div className="font-bold text-base mb-1">Доставка</div>
+                <div className="text-foreground/60 text-sm">По всей России</div>
+                <div className="text-foreground/40 text-xs mt-1">Почта России, СДЭК, Boxberry</div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-border p-6 flex gap-4 items-start animate-fade-in-up delay-300 card-hover">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
+                <Icon name="Clock" size={22} className="text-primary" />
+              </div>
+              <div>
+                <div className="font-bold text-base mb-1">Режим работы</div>
+                <div className="text-foreground/60 text-sm">Пн–Пт: 9:00 — 18:00</div>
+                <div className="text-foreground/40 text-xs mt-1">Сб–Вс: выходной</div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-border p-6 flex gap-4 items-start animate-fade-in-up delay-400 card-hover">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
+                <Icon name="ShieldCheck" size={22} className="text-primary" />
+              </div>
+              <div>
+                <div className="font-bold text-base mb-1">Гарантия</div>
+                <div className="text-foreground/60 text-sm">Возврат в течение 14 дней</div>
+                <div className="text-foreground/40 text-xs mt-1">Согласно закону о защите прав потребителей</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-br from-primary/5 to-secondary/10 rounded-2xl border border-border p-8 text-center animate-fade-in-up delay-300">
+            <div className="text-4xl mb-4">📍</div>
+            <div className="font-oswald text-2xl font-bold mb-2">Новосибирск</div>
+            <p className="text-foreground/50 text-sm mb-6">Интернет-магазин канцтоваров для учителей.<br/>Работаем с 2024 года.</p>
+            <button
+              onClick={() => setPage("catalog")}
+              className="bg-primary text-white px-8 py-3 rounded-2xl font-bold hover:opacity-90 transition-all hover:scale-105 shadow-lg shadow-primary/30"
+            >
+              Перейти в каталог
+            </button>
+          </div>
+        </main>
+      )}
+
       <footer className="border-t border-border bg-white mt-20 py-8">
         <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="font-oswald text-xl font-bold gradient-text">ПисюнШоп</span>
-          <p className="text-foreground/40 text-sm">© 2024 ПисюнШоп. Все права защищены.</p>
+          <div className="flex items-center gap-2 text-foreground/40 text-sm">
+            <Icon name="MapPin" size={14} />
+            <span>Новосибирск</span>
+            <span>·</span>
+            <span>© 2024 ПисюнШоп</span>
+          </div>
         </div>
       </footer>
     </div>
